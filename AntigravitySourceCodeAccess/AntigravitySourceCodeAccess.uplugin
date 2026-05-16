@@ -1,0 +1,27 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "Antigravity Editor Integration",
+	"Description": "Allows access to source code in Antigravity Editor",
+	"Category": "Programming",
+	"CreatedBy": "Vahab Ahmadvand",
+	"CreatedByURL": "https://github.com/vahabahmadvand",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": false,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "AntigravitySourceCodeAccess",
+			"Type": "Editor",
+			"LoadingPhase": "Default",
+			"PlatformAllowList": [
+				"Win64"
+			]
+		}
+	]
+}
