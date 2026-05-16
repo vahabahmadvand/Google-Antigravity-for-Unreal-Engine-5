@@ -1,4 +1,4 @@
-# Antigravity Editor Source Code Accessor for Unreal Engine
+# Antigravity Editor for Unreal Engine
 
 A lightweight Unreal Engine plugin that seamlessly integrates the **Antigravity Editor** (a VSCode-based custom editor) as a Source Code Editor within Unreal Engine.
 
@@ -98,5 +98,7 @@ You can create the file manually and paste the following configuration:
 
 Alternatively, you can bypass the editor completely and force-generate the files via a command-line script. Copy `GenerateVSCodeProjectfiles.bat` in your project's root folder and drag&drop your `.uproject` file on it.
 
+## Platform Support
+ - **Windows**
 ---
  Enjoy!
