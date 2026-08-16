@@ -121,13 +121,6 @@ Note the use of `"type": "lldb"` (bypasses the license error) and `${fileDirname
 
 ```json
 {
-    "folders": [
-        {
-            "name": "ProjectRoot",
-            "path": "."
-        }
-    ],
-    "settings": {},
     "launch": {
         "version": "0.2.0",
         "configurations": [
@@ -137,7 +130,7 @@ Note the use of `"type": "lldb"` (bypasses the license error) and `${fileDirname
                 "request": "launch",
                 "program": "C:\\Program Files\\Epic Games\\UE_5.8\\Engine\\Binaries\\Win64\\UnrealEditor.exe",
                 "args": [
-                    "\${fileDirname}\\YourProjectName.uproject",
+                    "ProjectPath\\YourProjectName.uproject",
                     "-skipcompile"
                 ],
                 "cwd": "C:\\Program Files\\Epic Games\\UE_5.8\\Engine\\Binaries\\Win64",
@@ -155,7 +148,7 @@ Note the use of `"type": "lldb"` (bypasses the license error) and `${fileDirname
                 "args": [
                     "Development",
                     "Win64",
-                    "-Project=\\${fileDirname}\\YourProjectName.uproject",
+                    "-Project=ProjectPath\\YourProjectName.uproject",
                     "-TargetType=Editor",
                     "-Progress"
                 ],
@@ -172,7 +165,7 @@ Note the use of `"type": "lldb"` (bypasses the license error) and `${fileDirname
     }
 }
 ```
-*(⚠️ Remember to change `UE_5.8` and `YourProjectName` inside the text paths to match your exact engine version and project name!)*
+*(⚠️ Remember to change `UE_5.8` and `ProjectPath\\YourProjectName` inside the text paths to match your exact engine version and project name and path!)*
 
 <details>
 <summary> Set up Launch.json and Tasks.json separately for older version</summary>
