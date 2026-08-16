@@ -66,9 +66,9 @@ void FAntigravitySourceCodeAccessor::RefreshAvailability()
 #if PLATFORM_WINDOWS
 	FString IDEPath;
 
-	if (!FWindowsPlatformMisc::QueryRegKey(HKEY_CURRENT_USER, TEXT("SOFTWARE\\Classes\\Applications\\Antigravity.exe\\shell\\open\\command\\"), TEXT(""), IDEPath))
+	if (!FWindowsPlatformMisc::QueryRegKey(HKEY_CURRENT_USER, TEXT("SOFTWARE\\Classes\\Applications\\Antigravity IDE.exe\\shell\\open\\command\\"), TEXT(""), IDEPath))
 	{
-		FWindowsPlatformMisc::QueryRegKey(HKEY_LOCAL_MACHINE, TEXT("SOFTWARE\\Classes\\Applications\\Antigravity.exe\\shell\\open\\command\\"), TEXT(""), IDEPath);
+		FWindowsPlatformMisc::QueryRegKey(HKEY_LOCAL_MACHINE, TEXT("SOFTWARE\\Classes\\Applications\\Antigravity IDE.exe\\shell\\open\\command\\"), TEXT(""), IDEPath);
 	}
 
 	FString PatternString(TEXT("\"(.*)\" \".*\""));
