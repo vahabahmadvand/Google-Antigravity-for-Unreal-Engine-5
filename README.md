@@ -98,6 +98,152 @@ You can create the file manually and paste the following configuration:
 
 Alternatively, you can bypass the editor completely and force-generate the files via a command-line script. Copy `GenerateVSCodeProjectfiles.bat` in your project's root folder and drag&drop your `.uproject` file on it.
 
+# Running Unreal Engine with Google Antigravity (Modern Workspace Setup)
+
+Latest versions of Unreal Engine package all build tasks and run settings directly inside a single `YourProjectName.code-workspace` file. However, the engine defaults to Microsoft's closed-source debugger (`"cppvsdbg"`), which triggers a licensing error inside open-source AI IDEs like Google Antigravity.
+
+Follow this setup to clean the workspace file, fix variable scoping bugs, and bypass Microsoft licensing restrictions completely.
+
+---
+
+## Prerequisites
+1. **IDE:** Google Antigravity (or any open-source VSCodium fork).
+2. **Extension:** Install **CodeLLDB** from the extensions marketplace (`Ctrl+Shift+X`). This replaces Microsoft's restricted debugging engines.
+3. **Compilers:** Ensure your native build tools (Visual Studio 2022 on Windows or Xcode on Mac) are installed.
+
+---
+
+## Unified Workspace Configuration
+
+Open your project's main folder on your computer. Find the **`YourProjectName.code-workspace`** file, open it in a text editor, and structure it like the template below. 
+
+Note the use of `"type": "lldb"` (bypasses the license error) and `${fileDirname}` (bypasses multi-folder variable scope bugs):
+
+```json
+{
+    "folders": [
+        {
+            "name": "ProjectRoot",
+            "path": "."
+        }
+    ],
+    "settings": {},
+    "launch": {
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "name": "Launch Game Editor (Antigravity)",
+                "type": "lldb",
+                "request": "launch",
+                "program": "C:\\Program Files\\Epic Games\\UE_5.8\\Engine\\Binaries\\Win64\\UnrealEditor.exe",
+                "args": [
+                    "\${fileDirname}\\YourProjectName.uproject",
+                    "-skipcompile"
+                ],
+                "cwd": "C:\\Program Files\\Epic Games\\UE_5.8\\Engine\\Binaries\\Win64",
+                "preLaunchTask": "UnrealEngine-Compile-Project"
+            }
+        ]
+    },
+    "tasks": {
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "label": "UnrealEngine-Compile-Project",
+                "type": "shell",
+                "command": "C:\\Program Files\\Epic Games\\UE_5.8\\Engine\\Binaries\\DotNET\\UnrealBuildTool\\UnrealBuildTool.exe",
+                "args": [
+                    "Development",
+                    "Win64",
+                    "-Project=\\${fileDirname}\\YourProjectName.uproject",
+                    "-TargetType=Editor",
+                    "-Progress"
+                ],
+                "options": {
+                    "cwd": "C:\\Program Files\\Epic Games\\UE_5.8\\Engine\\Binaries\\DotNET\\UnrealBuildTool"
+                },
+                "group": {
+                    "kind": "build",
+                    "isDefault": true
+                },
+                "problemMatcher": "\$msCompile"
+            }
+        ]
+    }
+}
+```
+*(⚠️ Remember to change `UE_5.8` and `YourProjectName` inside the text paths to match your exact engine version and project name!)*
+
+<details>
+<summary> Set up Launch.json and Tasks.json separately for older version</summary>
+Replace the files inside your hidden `.vscode/` folder with the open-source configurations below.
+
+### 1. `.vscode/launch.json`
+This file launches the Unreal Editor using the open-source **CodeLLDB** debugger instead of `cppvsdbg`. It uses `${fileDirname}` to avoid multi-root workspace variable bugs.
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Game Editor (Antigravity)",
+            "type": "lldb",
+            "request": "launch",
+            "program": "C:\\Program Files\\Epic Games\\UE_5.8\\Engine\\Binaries\\Win64\\UnrealEditor.exe",
+            "args": [
+                "\${fileDirname}\\YourProjectName.uproject",
+                "-skipcompile"
+            ],
+            "cwd": "C:\\Program Files\\Epic Games\\UE_5.8\\Engine\\Binaries\\Win64",
+            "preLaunchTask": "UnrealEngine-Compile-Project"
+        }
+    ]
+}
+```
+*(Note: Change `UE_5.8` and `YourProjectName` to match your engine version and project file name.)*
+
+### 2. `.vscode/tasks.json`
+This file configures the **Unreal Build Tool (UBT)** path so Antigravity can compile your source code natively.
+
+```json
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "UnrealEngine-Compile-Project",
+            "type": "shell",
+            "command": "C:\\Program Files\\Epic Games\\UE_5.8\\Engine\\Binaries\\DotNET\\UnrealBuildTool\\UnrealBuildTool.exe",
+            "args": [
+                "Development",
+                "Win64",
+                "-Project=\${fileDirname}\\YourProjectName.uproject",
+                "-TargetType=Editor",
+                "-Progress"
+            ],
+            "options": {
+                "cwd": "C:\\Program Files\\Epic Games\\UE_5.8\\Engine\\Binaries\\DotNET\\UnrealBuildTool"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": "\$msCompile"
+        }
+    ]
+}
+```
+</details>
+---
+
+## 🏃‍♂️ How to Compile and Run
+1. Launch **Google Antigravity**.
+2. Click **File > Open Workspace from File...** and select your `YourProjectName.code-workspace` file.
+3. Open **any C++ source file** (`.cpp` or `.h`) in your main editor pane.
+   * *Why? This initializes `${fileDirname}` so Antigravity can calculate your project file's exact location path.*
+4. Press **`F5`** on your keyboard.
+5. Antigravity will cleanly compile your code through the embedded task and immediately launch the Unreal Editor!
+
+
 ## Platform Support
  - **Windows**
 ---
