@@ -1,5 +1,7 @@
 # Antigravity Editor for Unreal Engine
 
+[![Buy Me A Beer](https://img.shields.io/badge/🍺_Buy_Me_a_Beer-Ko--fi-ff9800?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/vahabahmadvand)
+
 A lightweight Unreal Engine plugin that seamlessly integrates the **Antigravity Editor** (a VSCode-based custom editor) as a Source Code Editor within Unreal Engine.
 
 This plugin leverages Unreal Engine's `ISourceCodeAccessor` interface to ensure that clicking on C++ classes, blueprint nodes, or compilation errors inside the Unreal Editor instantly opens the correct file and line number inside your Antigravity Editor workspace.
